@@ -1,0 +1,125 @@
+<ion-header>
+    <ion-toolbar color="warning">
+        <ion-title>
+            Weather
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+    <!-- <form [formGroup]="info">
+        <ion-item>
+            <ion-label position="floating">City</ion-label>
+            <ion-input type="text" formControlName="city" #city></ion-input>
+        </ion-item>
+        <div *ngIf="info.controls.city.invalid && info.controls.city.dirty">
+            <p>*Please Enter Corret Input</p>
+        </div>
+        <ion-item>
+            <ion-label position="floating">Code</ion-label>
+            <ion-input type="text" formControlName="code"></ion-input>
+        </ion-item>
+
+        <ion-button shape="round" color="tertiary" type="submit" [disabled]="info.invalid" (click)="onSubmit(city)">Submit</ion-button>
+
+    </form> -->
+    <!-- <ion-searchbar shape="round" #city (click)="onSubmit(city)"></ion-searchbar> -->
+
+    <ion-searchbar showCancelButton animated (ionChange)="onSearch($event) " [(ngModel)]="city" (click)="onSubmit(city)"></ion-searchbar>
+    <div class="ion-list">
+        <ion-list position="floating" class="ion-margin-horizontal" [hidden]="!city.length">
+            <!-- <ion-item *ngFor="let album of albums | filtro: textBuscar: 'title'"> -->
+
+            <ion-item *ngFor="let album of cities | filtro: textSearch | slice:0:6">
+                <!-- <ion-button </ion-button> -->
+                <ion-label (click)="onSubmit(album.name)">{{album.name}},{{album.country}}</ion-label>
+                <!-- <ion-item-option ></ion-item-option> -->
+            </ion-item>
+        </ion-list>
+    </div>
+    <div class="container">
+        <div class="topshade">
+            <img src="http://openweathermap.org/img/w/{{list?.list[0].weather[0].icon}}.png" width="150px" height="100px">
+            <div class="text-right top">
+                <span>{{list?.list[0].main.temp | number:'1.0-0'}} °C </span>
+                <p>{{list?.city.name}}</p>
+            </div>
+
+            <div class="text-left date">{{list?.list[0].dt_txt | date:'EEEE, MMMM d, y'}} {{time}}</div>
+        </div>
+
+        <table class="table1">
+            <tr>
+                <td>Now</td>
+                <td>{{list?.list[1].dt_txt | date:'h a'}}</td>
+                <td>{{list?.list[2].dt_txt | date:'h a'}}</td>
+                <td>{{list?.list[3].dt_txt | date:'h a'}}</td>
+                <td>{{list?.list[4].dt_txt | date:'h a'}}</td>
+            </tr>
+            <tr>
+                <td> <img src="http://openweathermap.org/img/w/{{list?.list[0].weather[0].icon}}.png"></td>
+                <td> <img src="http://openweathermap.org/img/w/{{list?.list[1].weather[0].icon}}.png"></td>
+                <td> <img src="http://openweathermap.org/img/w/{{list?.list[2].weather[0].icon}}.png"></td>
+                <td> <img src="http://openweathermap.org/img/w/{{list?.list[3].weather[0].icon}}.png"></td>
+                <td> <img src="http://openweathermap.org/img/w/{{list?.list[4].weather[0].icon}}.png"></td>
+            </tr>
+            <tr>
+                <td>{{list?.list[0].main.temp | number:'1.0-0'}} °C</td>
+                <td>{{list?.list[1].main.temp | number:'1.0-0'}} °C</td>
+                <td>{{list?.list[2].main.temp | number:'1.0-0'}} °C</td>
+                <td>{{list?.list[3].main.temp | number:'1.0-0'}} °C</td>
+                <td>{{list?.list[4].main.temp | number:'1.0-0'}} °C</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="container">
+        <div class="week">
+            <span>Week</span>
+        </div>
+
+        <table class="table2">
+            <tr>
+                <td>{{list?.list[8].dt_txt | date:'EEEE'}}</td>
+                <td><img src="http://openweathermap.org/img/w/{{list?.list[8].weather[0].icon}}.png"></td>
+                <td class="right">{{list?.list[8].main.temp | number:'1.0-0'}} °C</td>
+            </tr>
+            <tr>
+                <td>{{list?.list[16].dt_txt | date:'EEEE'}}</td>
+                <td><img src="http://openweathermap.org/img/w/{{list?.list[16].weather[0].icon}}.png"></td>
+                <td class="right">{{list?.list[16].main.temp | number:'1.0-0'}} °C</td>
+            </tr>
+            <tr>
+                <td>{{list?.list[24].dt_txt | date:'EEEE'}}</td>
+                <td><img src="http://openweathermap.org/img/w/{{list?.list[24].weather[0].icon}}.png"></td>
+                <td class="right">{{list?.list[24].main.temp | number:'1.0-0'}} °C</td>
+            </tr>
+            <tr>
+                <td>{{list?.list[32].dt_txt | date:'EEEE'}}</td>
+                <td><img src="http://openweathermap.org/img/w/{{list?.list[32].weather[0].icon}}.png"></td>
+                <td class="right">{{list?.list[32].main.temp | number:'1.0-0'}} °C</td>
+            </tr>
+            <tr>
+                <td>{{list?.list[39].dt_txt | date:'EEEE'}}</td>
+                <td><img src="http://openweathermap.org/img/w/{{list?.list[39].weather[0].icon}}.png"></td>
+                <td class="right">{{list?.list[39].main.temp | number:'1.0-0'}} °C</td>
+            </tr>
+
+        </table>
+    </div>
+    <div class="container">
+        <div class="week">
+            <span>Wind</span>
+        </div>
+
+        <img src="/assets/img/turbines.gif" width="100px" height="100px">
+        <div class="text-right wind">
+            <span>Speed  {{list?.list[0].wind.speed}} Km/h </span><br>
+            <!-- <span>Direction: {{Direction}} </span> -->
+            <!-- <p>{{list?.city.name}}</p> -->
+        </div>
+
+    </div>
+</ion-content>
